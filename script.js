@@ -1,19 +1,19 @@
-// ===== Reckon Calculator — logic =====
+
 
 const expressionEl = document.getElementById('expression');
 const resultEl = document.getElementById('result');
 const pad = document.getElementById('pad');
 
-// Internal state
-let currentInput = '0';   // the number currently being typed
-let previousValue = null; // stored left-hand operand
+
+let currentInput = '0';  
+let previousValue = null; 
 let pendingOperator = null;
-let expressionDisplay = ''; // human-readable running expression (top line)
-let justEvaluated = false;  // true right after "=" so next digit starts fresh
+let expressionDisplay = '';
+let justEvaluated = false; 
 
 const MAX_DIGITS = 14;
 
-// Map our display operator symbols to real math operators
+
 const OP_MAP = {
   '+': '+',
   '−': '-',
@@ -133,7 +133,7 @@ function compute(a, b, opSymbol) {
       break;
     default: return null;
   }
-  // guard against floating point noise (0.1 + 0.2 etc.)
+
   return Math.round((res + Number.EPSILON) * 1e10) / 1e10;
 }
 
@@ -178,7 +178,7 @@ function percent() {
   updateScreen();
 }
 
-// ===== Button press handling (with visual feedback) =====
+
 function flashKey(btn) {
   btn.classList.add('is-pressed');
   setTimeout(() => btn.classList.remove('is-pressed'), 110);
