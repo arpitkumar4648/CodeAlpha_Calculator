@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@500;600;700&display=swap');
+
+:root {
+  /* color tokens */
+  --body-graphite: #2B2D33;
+  --panel-graphite: #383B43;
+  --bezel-dark: #1E1F24;
+  --screen-cream: #F2EFE6;
+  --digit-ink: #2B2D33;
+  --digit-ghost: #9A968A;
+  --accent-rust: #D9742B;
+  --accent-rust-dim: #B8611F;
+  --accent-sage: #7A8B69;
+  --accent-sage-dim: #647358;
+  --key-num: #ECE8DD;
+  --key-num-press: #D8D3C4;
+  --text-on-dark: #ECE8DD;
+  --text-muted: #8A8D96;
+
+  /* type */
+  --font-display: 'JetBrains Mono', monospace;
+  --font-ui: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 0%, #3a3d45 0%, #1a1b1f 70%);
+  font-family: var(--font-ui);
+  padding: 24px;
+}
+
+.calc {
+  width: 360px;
+  background: var(--body-graphite);
+  border-radius: 28px;
+  padding: 22px 20px 18px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 30px 60px -20px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(0,0,0,0.4);
+}
+
+/* ---- Brand header ---- */
+.calc__brand {
+  display: flex;
+  align-items: baseline;
+  padding: 2px 4px 16px;
+}
+
+.calc__brand-mark {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--text-on-dark);
+}
+
+/* ---- Screen ---- */
+.screen {
+  background: var(--screen-cream);
+  border-radius: 16px;
+  padding: 22px 20px 18px;
+  margin-bottom: 18px;
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,0.25),
+    inset 0 0 0 1px rgba(0,0,0,0.08);
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.025) 0px,
+    rgba(0,0,0,0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+.screen__expression {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--digit-ghost);
+  min-height: 18px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.screen__result {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 42px;
+  color: var(--digit-ink);
+  line-height: 1.15;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow-x: auto;
+  letter-spacing: -0.01em;
+}
+
+.screen__result.is-error {
+  color: var(--accent-rust-dim);
+  font-size: 24px;
+}
+
+/* ---- Keypad ---- */
+.pad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.key {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: transform 0.06s ease, filter 0.15s ease, box-shadow 0.1s ease;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.18);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:active,
+.key.is-pressed {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 rgba(0,0,0,0.25);
+}
+
+.key--num {
+  background: var(--key-num);
+  color: var(--digit-ink);
+}
+.key--num:hover { background: #f3efe2; }
+.key--num.is-pressed { background: var(--key-num-press); }
+
+.key--zero { grid-column: span 1; }
+
+.key--util {
+  background: var(--panel-graphite);
+  color: var(--text-on-dark);
+  font-size: 15px;
+}
+.key--util:hover { filter: brightness(1.15); }
+
+.key--op {
+  background: var(--accent-rust);
+  color: #fff;
+}
+.key--op:hover { background: #e2812f; }
+.key--op.is-pressed,
+.key--op.is-active {
+  background: var(--accent-rust-dim);
+}
+
+.key--equals {
+  grid-column: span 2;
+  background: var(--accent-sage);
+  color: #fff;
+  font-size: 20px;
+}
+.key--equals:hover { background: #87996f; }
+.key--equals.is-pressed { background: var(--accent-sage-dim); }
+
+.key:focus-visible {
+  outline: 2px solid var(--text-on-dark);
+  outline-offset: 2px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 400px) {
+  .calc { width: 100%; max-width: 360px; }
+  .screen__result { font-size: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
+}
